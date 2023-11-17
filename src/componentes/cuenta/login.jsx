@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import {Box, TextField, Button, styled} from '@mui/material';
-
+import {Box, TextField, Button, styled, Typography} from '@mui/material';
+import { API } from '../../service/api';
 
 const Component = styled(Box)`
     width: 400px;
@@ -43,16 +43,51 @@ const SignupButton = styled(Button)`
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
 `;
 
+const Error = styled(Typography)`
+    font-size: 10px;
+    color: #ff6161;
+    line-height: 0;
+    margin-top: 10px;
+    font-weight: 600;
+`;
+
+
+const signupInitialValues = {
+    nombre:'',
+    nombreusuario:'',
+    contrasena:''
+}
 
 const Login = ()=>{
 
     const imagenn = 'https://static.vecteezy.com/system/resources/thumbnails/011/635/825/small/abstract-square-interface-modern-background-concept-fingerprint-digital-scanning-visual-security-system-authentication-login-vector.jpg';
 
     const [account, toggleAcount] = useState('login');
+    const [signup, setSignup] = useState(signupInitialValues)
+    const [error, setError] = useState('');
 
     const toggleSignup = ()=>{
         account === 'signup' ? toggleAcount('login') : toggleAcount('signup');
     }
+
+    const onInputChange = (e) => {
+        console.log("Input changed:", e.target.name, e.target.value);
+        setSignup({ ...signup, [e.target.name]: e.target.value });
+    };
+    
+
+    const signupUser = async () => {
+        let response = await API.userSignup(signup);
+        if(response.isSuccess){
+            setError('');
+            setSignup(signupInitialValues);
+            toggleAcount('login')
+        } else {
+            setError('algo salio mal, intenta de nuevo despues');
+        }
+    }
+    
+    
 
     return(
         <Component>
@@ -60,21 +95,25 @@ const Login = ()=>{
             <Image src={imagenn} alt="lg"/>
             {
                 account === 'login' ?
-                    <Wrapper>
-                        
+                <Wrapper>
                         <TextField variant="standard" label="usuario"/>
                         <TextField variant="standard" label="contrasena"/>
+
+                        {error && <Error>{error}</Error>}
+
                         <LoginButton variant="contained">Login</LoginButton>
                         <SignupButton onClick={toggleSignup}>Crear una cuenta</SignupButton>
-                    </Wrapper> 
+                    </Wrapper>
                 :
 
                     <Wrapper>
-                        <TextField variant="standard" label="nombre"/>
-                        <TextField variant="standard" label="nombre de usuario"/>
-                        <TextField variant="standard" label="contrasena"/>
+                        <TextField variant="standard" onChange={(e) => onInputChange(e)} name='nombre' label="nombre"/>
+                        <TextField variant="standard" onChange={(e) => onInputChange(e)} name='nombreusuario' label="nombre de usuario"/>
+                        <TextField variant="standard" onChange={(e) => onInputChange(e)} name='contrasena' label="contraseña"/>
+                        
+                        {error && <Error>{error}</Error>}
 
-                        <SignupButton>Regitrarse</SignupButton>
+                        <SignupButton onClick={() => signupUser()} >Resgistrarse</SignupButton>
                         <LoginButton variant='contained' onClick={toggleSignup}>Tienes una cuenta</LoginButton>
                     </Wrapper>
             }  

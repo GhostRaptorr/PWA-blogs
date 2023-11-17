@@ -1,0 +1,79 @@
+
+---------pwa-blogs------
+/////////////////////////////////////////////////
+
+npx create-react-app pwa-blogs
+
+/////////////////////////////////////////////////
+
+npm install @mui/material @emotion/react @emotion/styled
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+--------server--------
+npm init
+
+{
+  "name": "servidor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+
+cambiar por: 
+
+{
+  "name": "servidor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
+
+
+/////////////////////////////////////////////////
+
+npm i axios
+
+
+/////////////////////////////////////////////////
+
+npm i express
+usar en el index.js
+
+/////////////////////////////////////////////////
+
+npm i --save-dev nodemon
+
+cambiar en package.json
+"start": "nodemon index.js"
+
+/////////////////////////////////////////////////
+
+crear base de datos en https://cloud.mongodb.com/v2/655592d7898dab347600cdff#/overview
+
+npm i mongoose
+
+/////////////////////////////////////////////////
+
+npm i dotenv
+
+////////////////////////////////////////////////
+
+npm i cors
+
+///////////////////////////////////////////
+
+npm i body-parser

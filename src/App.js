@@ -1,8 +1,4 @@
-/*NUEVO*/
-
-import logo from './logo.svg';
 import './App.css';
-
 //coponentes
 import Login from './componentes/cuenta/login'
 
